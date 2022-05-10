@@ -1,1 +1,11 @@
-export interface IMovie {}
+export interface IMovieItem {
+  Title: string;
+  Year: string;
+  imdbID: string;
+  Type: string;
+  Poster: string;
+}
+
+export interface IMovieList {
+  Search: IMovieItem[];
+}
