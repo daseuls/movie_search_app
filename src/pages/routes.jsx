@@ -1,14 +1,16 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 
-function Router() {
+const Router = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" />
-      </Routes>
+      <RecoilRoot>
+        <Routes>
+          <Route path="/" />
+        </Routes>
+      </RecoilRoot>
     </BrowserRouter>
   );
-}
+};
 
 export default Router;
