@@ -1,5 +1,7 @@
+import styled from "styled-components";
+
 const NavTab = () => {
-  return <div>NabTab</div>;
+  return <div>NavTab</div>;
 };
 
 export default NavTab;

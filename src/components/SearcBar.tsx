@@ -1,5 +1,7 @@
+import styled from "styled-components";
+
 const SearchBar = () => {
-  return <div>NabTab</div>;
+  return <div>SearchBar</div>;
 };
 
 export default SearchBar;

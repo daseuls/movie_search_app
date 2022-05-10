@@ -1,5 +1,12 @@
+import styled from "styled-components";
+import SearchBar from "../components/SearcBar";
+
 const Search = () => {
-  return <div>Search</div>;
+  return (
+    <div>
+      <SearchBar />
+    </div>
+  );
 };
 
 export default Search;

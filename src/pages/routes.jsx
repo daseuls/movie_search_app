@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import Search from "./Search";
 import styled from "styled-components";
+import NavTab from "../components/NavTab";
 
 const Router = () => {
   return (
@@ -11,6 +12,7 @@ const Router = () => {
           <Routes>
             <Route path="/" element={<Search />} />
           </Routes>
+          <NavTab />
         </Container>
       </RecoilRoot>
     </BrowserRouter>
@@ -20,9 +22,10 @@ const Router = () => {
 export default Router;
 
 const Container = styled.section`
-  height: 70vh;
+  ${({ theme }) => theme.flexbox("column", "space-between", "center")}
+  height: 55rem;
   width: 27rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 4rem;
-  border: 2px solid gray;
+  border: 3px solid gray;
 `;
