@@ -11,7 +11,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
 :root{
-    font-size: 10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-size: 10px;
   }
   
 
