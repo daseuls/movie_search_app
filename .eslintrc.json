@@ -46,6 +46,7 @@
 
     "no-shadow": "off",
     "no-unused-expressions": ["warn"],
+    "consistent-return": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/unbound-method": "off",

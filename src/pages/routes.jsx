@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
-import Search from "./Search";
+import MovieMain from "./MovieMain";
 import styled from "styled-components";
 import NavTab from "../components/NavTab";
 
@@ -10,7 +10,7 @@ const Router = () => {
       <RecoilRoot>
         <Container>
           <Routes>
-            <Route path="/" element={<Search />} />
+            <Route path="/" element={<MovieMain />} />
           </Routes>
           <NavTab />
         </Container>

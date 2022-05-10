@@ -9,3 +9,8 @@ export interface IMovieItem {
 export interface IMovieList {
   Search: IMovieItem[];
 }
+
+export interface IFetchConfig {
+  s: string;
+  page: number;
+}
