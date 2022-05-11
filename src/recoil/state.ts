@@ -21,7 +21,13 @@ export const getMovieListSelector = selector({
   get: async ({ get }) => {
     const keyword = get(keywordState);
     const page = get(pageState);
-    const data = await getMovieData("doctor", page);
-    return data?.data.Search;
+    if (keyword) {
+      const data = await getMovieData(keyword, page);
+      if (data?.data.Response === "True") {
+        return data.data.Search;
+      }
+      return [];
+    }
+    return [];
   },
 });

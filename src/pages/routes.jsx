@@ -10,14 +10,14 @@ const Router = () => {
   return (
     <BrowserRouter>
       <RecoilRoot>
-        <Suspense fallback={<Loading />}>
-          <Container>
+        <Container>
+          <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="/" element={<MovieMain />} />
             </Routes>
             <NavTab />
-          </Container>
-        </Suspense>
+          </Suspense>
+        </Container>
       </RecoilRoot>
     </BrowserRouter>
   );
