@@ -3,17 +3,21 @@ import { RecoilRoot } from "recoil";
 import MovieMain from "./MovieMain";
 import styled from "styled-components";
 import NavTab from "../components/NavTab";
+import { Suspense } from "react";
+import Loading from "../components/Loading";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <RecoilRoot>
-        <Container>
-          <Routes>
-            <Route path="/" element={<MovieMain />} />
-          </Routes>
-          <NavTab />
-        </Container>
+        <Suspense fallback={<Loading />}>
+          <Container>
+            <Routes>
+              <Route path="/" element={<MovieMain />} />
+            </Routes>
+            <NavTab />
+          </Container>
+        </Suspense>
       </RecoilRoot>
     </BrowserRouter>
   );
