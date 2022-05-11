@@ -30,7 +30,8 @@ const Container = styled.section`
   height: 55rem;
   width: 27rem;
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 3.5rem;
+  border-radius: 3rem;
   border: 3px solid gray;
   overflow: auto;
+  position: relative;
 `;

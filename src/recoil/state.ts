@@ -22,9 +22,9 @@ export const getMovieListSelector = selector({
   get: async ({ get }) => {
     const keyword = get(keywordState);
     const page = get(pageState);
-
     if (keyword) {
       const data = await getMovieData(keyword, page);
+      console.log(data?.data);
       return data?.data;
     }
     return { Response: "False", Error: "Movie not found!" };

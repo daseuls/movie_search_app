@@ -27,6 +27,9 @@ const MovieMain = () => {
 
 export default MovieMain;
 
-const Container = styled.main``;
+const Container = styled.main`
+  height: 100%;
+  overflow: auto;
+`;
 
 const MovieListContainer = styled.ul``;
