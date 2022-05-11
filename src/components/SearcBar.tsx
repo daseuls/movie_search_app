@@ -1,10 +1,28 @@
+import { useState, ChangeEvent } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { keywordState, pageState } from "../recoil/state";
 import styled from "styled-components";
 
 const SearchBar = () => {
+  const setKeyword = useSetRecoilState(keywordState);
+  const setPage = useSetRecoilState(pageState);
+
+  const [inputValue, setInputValue] = useState("");
+
+  const handleSubmitForm = (e: any) => {
+    e.preventDefault();
+    setKeyword(inputValue);
+    setInputValue("");
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setInputValue(e.currentTarget.value);
+  };
+
   return (
     <Container>
-      <SearchBarForm>
-        <SearchBarInput placeholder="Search" />
+      <SearchBarForm onSubmit={handleSubmitForm}>
+        <SearchBarInput type="text" placeholder="Search" onChange={handleInputChange} value={inputValue} />
         <SearchBtn />
       </SearchBarForm>
     </Container>

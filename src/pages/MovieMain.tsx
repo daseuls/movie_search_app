@@ -16,8 +16,6 @@ const MovieMain = () => {
     fetchData();
   }, []);
 
-  console.log(movieList);
-
   return (
     <Container>
       <SearchBar />
