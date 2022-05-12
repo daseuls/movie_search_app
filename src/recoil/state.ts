@@ -15,23 +15,10 @@ export const pageState = atom({
 
 export const movieListState = atom<IMovieResponse>({
   key: `#movieListState/${v4()}`,
-  default: { Response: "False", Error: "hi" },
+  default: { Response: "False", Error: "Search movie!" },
 });
 
 export const bookmarkMovieListState = atom<IMovieItem[] | []>({
   key: `#bookmarkMovieListState/${v4()}`,
   default: [],
 });
-
-// export const getMovieListSelector = selector({
-//   key: `movieList/get/${v4()}`,
-//   get: async ({ get }) => {
-//     const keyword = get(keywordState);
-
-//     if (keyword) {
-//       const data = await getMovieData(keyword, 1);
-//       return data?.data;
-//     }
-//     return { Response: "False", Error: "Movie not found!" };
-//   },
-// });

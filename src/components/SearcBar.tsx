@@ -1,16 +1,23 @@
 import { useState, ChangeEvent } from "react";
-import { useSetRecoilState } from "recoil";
-import { keywordState } from "../recoil/state";
+import { useSetRecoilState, useRecoilState } from "recoil";
+import { keywordState, movieListState } from "../recoil/state";
 import { AiOutlineSearch } from "react-icons/ai";
 import styled from "styled-components";
+import { getMovieData } from "../utils/fetchData";
 
 const SearchBar = () => {
   const setKeyword = useSetRecoilState(keywordState);
+  const [movieList, setMovieList] = useRecoilState(movieListState);
 
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmitForm = (e: any) => {
     e.preventDefault();
+    const fetchData = async () => {
+      const res = await getMovieData(inputValue, 1);
+      setMovieList(res?.data);
+    };
+    fetchData();
     setKeyword(inputValue);
     setInputValue("");
   };
@@ -24,7 +31,7 @@ const SearchBar = () => {
       <SearchBarForm onSubmit={handleSubmitForm}>
         <SearchBarInput type="text" onChange={handleInputChange} value={inputValue} />
         <SearchBtn>
-          <AiOutlineSearch size={16} color="gray" />
+          <AiOutlineSearch size={20} color="gray" />
         </SearchBtn>
       </SearchBarForm>
     </Container>
@@ -50,13 +57,13 @@ const SearchBarInput = styled.input`
   border: 1px solid #efefef;
   border-radius: 3rem;
   width: 100%;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: white;
-  font-size: 1.2rem;
+  font-size: 1.2em;
 `;
 
 const SearchBtn = styled.button`
   position: absolute;
-  right: 1rem;
+  right: 1.5rem;
   cursor: pointer;
 `;

@@ -2,7 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import { IMovieItem } from "../types/interface";
 import { useRecoilState } from "recoil";
-import { movieListState, bookmarkMovieListState } from "../recoil/state";
+import { bookmarkMovieListState } from "../recoil/state";
+import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
+import { BsFillReplyFill } from "react-icons/bs";
 
 interface IProps {
   item: IMovieItem;
@@ -11,6 +13,8 @@ interface IProps {
 const MovieItem = ({ item }: IProps) => {
   const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
   const [isOpened, setIsOpened] = useState(false);
+
+  const isBookmarked = bookMarkMovieList.map((el) => el.imdbID).includes(item.imdbID);
 
   const handleItemOpen = () => {
     setIsOpened((prev) => !prev);
@@ -31,23 +35,28 @@ const MovieItem = ({ item }: IProps) => {
   return (
     <Container>
       <MovieItemContainer onClick={handleItemOpen}>
-        <MoviePoster src={item.Poster} />
+        <MoviePoster src={item.Poster === "N/A" ? "https://i-shop.link/assets/images/no-image.png" : item.Poster} />
         <MovieDetailContainer>
           <MovieTitle>{item.Title}</MovieTitle>
           <MovieDetail>
             {item.Year} | {item.Type}
           </MovieDetail>
         </MovieDetailContainer>
+        {isBookmarked ? (
+          <HeartIcon>
+            <AiTwotoneHeart size={30} color="EDA1C1" />
+          </HeartIcon>
+        ) : null}
       </MovieItemContainer>
       {isOpened ? (
-        <div>
-          <button onClick={() => handleAddBookmark(item.imdbID)} type="button">
-            {bookMarkMovieList.map((el) => el.imdbID).includes(item.imdbID) ? "즐겨찾기 삭제" : "즐겨찾기 추가"}
-          </button>
-          <button onClick={handleItemOpen} type="button">
-            닫힘
-          </button>
-        </div>
+        <DropdownContainer isOpened={isOpened}>
+          <BookmarkBtn onClick={() => handleAddBookmark(item.imdbID)} type="button">
+            {isBookmarked ? <AiTwotoneHeart size={20} color="EDA1C1" /> : <AiOutlineHeart size={20} color="EDA1C1" />}
+          </BookmarkBtn>
+          <CloseBtn onClick={handleItemOpen} type="button">
+            <BsFillReplyFill size={20} color="EDA1C1" />
+          </CloseBtn>
+        </DropdownContainer>
       ) : null}
     </Container>
   );
@@ -55,20 +64,31 @@ const MovieItem = ({ item }: IProps) => {
 
 export default MovieItem;
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  margin-bottom: 1rem;
+`;
 
 const MovieItemContainer = styled.li`
   ${({ theme }) => theme.flexbox("row", "flex-start", "center")}
-  padding:1rem;
+  padding:1rem 2rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 3px -1px, rgba(0, 0, 0, 0.06) 0px 1px 4px -1px;
-  border-radius: 2rem;
-  margin-bottom: 0.5rem;
+  border-radius: 2.5rem;
+  margin-bottom: 0.7rem;
   background-color: white;
   cursor: pointer;
+  transition: all 0.2s ease-in;
+  position: relative;
+
+  :hover {
+    background-color: #ffefef;
+    transform: scale(1.02);
+  }
 `;
 
 const MoviePoster = styled.img`
-  width: 4rem;
+  width: 5rem;
+  height: 6.5rem;
   border-radius: 0.7rem;
 `;
 
@@ -80,6 +100,28 @@ const MovieTitle = styled.p`
   font-weight: 700;
   font-size: 1.2rem;
 `;
+
 const MovieDetail = styled.p`
   color: gray;
+`;
+
+const DropdownContainer = styled.div<{ isOpened: boolean }>`
+  width: 100%;
+  background-color: #f6e5f5;
+  border-radius: 1.5rem;
+  padding: 1rem;
+`;
+
+const BookmarkBtn = styled.button`
+  width: 50%;
+  border-right: 1px solid #eda1c1;
+`;
+
+const CloseBtn = styled.button`
+  width: 50%;
+`;
+
+const HeartIcon = styled.div`
+  position: absolute;
+  right: 3rem;
 `;

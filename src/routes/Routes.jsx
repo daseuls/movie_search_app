@@ -29,10 +29,10 @@ export default Router;
 
 const Container = styled.section`
   ${({ theme }) => theme.flexbox("column", "space-between", "center")}
-  height: 55rem;
-  width: 27rem;
+  height: 80rem;
+  width: 40rem;
   background-color: ${({ theme }) => theme.colors.backGroundColor};
-  border-radius: 3rem;
+  border-radius: 5rem;
   border: 3px solid gray;
   overflow: auto;
   position: relative;
