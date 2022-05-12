@@ -5,6 +5,7 @@ import styled from "styled-components";
 import NavTab from "../components/NavTab";
 import { Suspense } from "react";
 import Loading from "../components/Loading";
+import Bookmark from "./Bookmark";
 
 const Router = () => {
   return (
@@ -14,6 +15,7 @@ const Router = () => {
           <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="/" element={<MovieMain />} />
+              <Route path="/bookmark" element={<Bookmark />} />
             </Routes>
             <NavTab />
           </Suspense>
