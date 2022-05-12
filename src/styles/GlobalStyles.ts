@@ -1,13 +1,20 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import InterBold from "../assets/font/InterBold.ttf";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
+
+  @font-face {
+    font-family: "InterBold";
+    src: url(${InterBold}) format("truetype");
+  }
 	
   * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "InterBold"
   }
 
 :root{
@@ -16,6 +23,8 @@ const GlobalStyle = createGlobalStyle`
   align-items:center;
   height:100vh;
   font-size: 10px;
+  font-family: "InterBold"
+
   }
   
 
