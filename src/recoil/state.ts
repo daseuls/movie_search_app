@@ -18,6 +18,11 @@ export const movieListState = atom<IMovieResponse>({
   default: { Response: "False", Error: "hi" },
 });
 
+export const bookmarkMovieListState = atom<IMovieItem[] | []>({
+  key: `#bookmarkMovieListState/${v4()}`,
+  default: [],
+});
+
 // export const getMovieListSelector = selector({
 //   key: `movieList/get/${v4()}`,
 //   get: async ({ get }) => {

@@ -4,13 +4,15 @@ import SearchBar from "../components/SearcBar";
 import MovieItem from "../components/MovieItem";
 import { IMovieResponse, IMovieItem } from "../types/interface";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { movieListState, keywordState } from "../recoil/state";
+import { movieListState, keywordState, bookmarkMovieListState } from "../recoil/state";
 import NotFound from "../components/NotFound";
 import { getMovieData } from "../utils/fetchData";
 
 const MovieMain = () => {
   // const movieList = useRecoilValue<IMovieResponse>(getMovieListSelector);
   const [movieList, setMovieList] = useRecoilState(movieListState);
+  const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
+
   const keyword = useRecoilValue(keywordState);
 
   useEffect(() => {
@@ -19,7 +21,11 @@ const MovieMain = () => {
       setMovieList(res?.data);
     };
     fetchData();
-  }, [keyword, setMovieList]);
+    const localData = localStorage.getItem("bookmark");
+    if (localData) {
+      setBookmarkMovieList(JSON.parse(localData));
+    }
+  }, [keyword, setBookmarkMovieList, setMovieList]);
 
   return (
     <Container>
@@ -27,10 +33,7 @@ const MovieMain = () => {
       {movieList.Response === "True" ? (
         <MovieListContainer>
           {movieList?.Search?.map((movie, i) => (
-            <>
-              <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
-              {movie.isSelected ? <div>좋아요</div> : null}
-            </>
+            <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
           ))}
         </MovieListContainer>
       ) : (

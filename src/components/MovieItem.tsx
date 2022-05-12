@@ -2,18 +2,30 @@ import { useState } from "react";
 import styled from "styled-components";
 import { IMovieItem } from "../types/interface";
 import { useRecoilState } from "recoil";
-import { movieListState } from "../recoil/state";
+import { movieListState, bookmarkMovieListState } from "../recoil/state";
 
 interface IProps {
   item: IMovieItem;
 }
 
 const MovieItem = ({ item }: IProps) => {
-  const [movieList, setMovieList] = useRecoilState(movieListState);
+  const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
   const [isOpened, setIsOpened] = useState(false);
 
   const handleItemOpen = () => {
     setIsOpened((prev) => !prev);
+  };
+
+  const handleAddBookmark = (id: string) => {
+    if (bookMarkMovieList.map((el) => el.imdbID).includes(item.imdbID)) {
+      const newItem = bookMarkMovieList.filter((el) => el.imdbID !== item.imdbID);
+      setBookmarkMovieList(newItem);
+      localStorage.setItem("bookmark", JSON.stringify(newItem));
+    } else {
+      const newItem = [...bookMarkMovieList, item];
+      setBookmarkMovieList(newItem);
+      localStorage.setItem("bookmark", JSON.stringify(newItem));
+    }
   };
 
   return (
@@ -29,7 +41,9 @@ const MovieItem = ({ item }: IProps) => {
       </MovieItemContainer>
       {isOpened ? (
         <div>
-          <button type="button">즐겨찾기 추가</button>
+          <button onClick={() => handleAddBookmark(item.imdbID)} type="button">
+            {bookMarkMovieList.map((el) => el.imdbID).includes(item.imdbID) ? "즐겨찾기 삭제" : "즐겨찾기 추가"}
+          </button>
           <button onClick={handleItemOpen} type="button">
             닫힘
           </button>
