@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const NavTab = () => {
+  const navigate = useNavigate();
   return (
     <Container>
-      <NavBtn>Search</NavBtn>
-      <NavBtn>Bookmark</NavBtn>
+      <NavBtn onClick={() => navigate("/")}>Search</NavBtn>
+      <NavBtn onClick={() => navigate("/bookmark")}>Bookmark</NavBtn>
     </Container>
   );
 };
