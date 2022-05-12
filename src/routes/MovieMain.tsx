@@ -1,16 +1,15 @@
 import { useEffect } from "react";
 import styled from "styled-components";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { AiOutlineUnorderedList } from "react-icons/ai";
 import SearchBar from "../components/SearcBar";
 import MovieItem from "../components/MovieItem";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { movieListState, keywordState, bookmarkMovieListState } from "../recoil/state";
+import { movieListState, bookmarkMovieListState } from "../recoil/state";
 import NotFound from "../components/NotFound";
-import { getMovieData } from "../utils/fetchData";
-import { AiOutlineUnorderedList } from "react-icons/ai";
 
 const MovieMain = () => {
-  const [movieList, setMovieList] = useRecoilState(movieListState);
-  const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
+  const movieList = useRecoilValue(movieListState);
+  const setBookmarkMovieList = useSetRecoilState(bookmarkMovieListState);
 
   useEffect(() => {
     const localData = localStorage.getItem("bookmark");
@@ -28,7 +27,6 @@ const MovieMain = () => {
             <AiOutlineUnorderedList size={20} />
             <MovieTotal>Total {movieList.totalResults}</MovieTotal>
           </TotalContainer>
-
           {movieList?.Search?.map((movie, i) => (
             <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
           ))}

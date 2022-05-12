@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-const Loading = () => {
+function Loading() {
   return (
     <Container>
       <p>Loading</p>
     </Container>
   );
-};
+}
 
 export default Loading;
 

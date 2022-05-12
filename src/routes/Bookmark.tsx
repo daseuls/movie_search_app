@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
+import { AiTwotoneHeart } from "react-icons/ai";
+import { useEffect } from "react";
 import { bookmarkMovieListState } from "../recoil/state";
 import MovieItem from "../components/MovieItem";
-import { AiOutlineSearch, AiTwotoneHeart } from "react-icons/ai";
-import { useEffect } from "react";
 
 const Bookmark = () => {
   const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
@@ -21,7 +21,6 @@ const Bookmark = () => {
         <AiTwotoneHeart size={30} color="FFC7C7" />
         <Title>My Bookmark ({bookMarkMovieList.length})</Title>
       </TitleContainer>
-
       {bookMarkMovieList.map((movie, i) => (
         <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
       ))}

@@ -1,20 +1,21 @@
-import { useState, ChangeEvent } from "react";
-import { useSetRecoilState, useRecoilState } from "recoil";
-import { keywordState, movieListState } from "../recoil/state";
+import { useState, ChangeEvent, FormEvent } from "react";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import { AiOutlineSearch } from "react-icons/ai";
 import styled from "styled-components";
+import { keywordState, movieListState, pageState } from "../recoil/state";
 import { getMovieData } from "../utils/fetchData";
 
 const SearchBar = () => {
   const setKeyword = useSetRecoilState(keywordState);
-  const [movieList, setMovieList] = useRecoilState(movieListState);
+  const setMovieList = useSetRecoilState(movieListState);
+  const page = useRecoilValue(pageState);
 
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmitForm = (e: any) => {
+  const handleSubmitForm = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const fetchData = async () => {
-      const res = await getMovieData(inputValue, 1);
+      const res = await getMovieData(inputValue, page);
       setMovieList(res?.data);
     };
     fetchData();
@@ -54,7 +55,7 @@ const SearchBarForm = styled.form`
 `;
 
 const SearchBarInput = styled.input`
-  border: 1px solid #efefef;
+  border: 2px solid ${({ theme }) => theme.colors.navTabColor};
   border-radius: 3rem;
   width: 100%;
   padding: 1.5rem;

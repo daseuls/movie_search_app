@@ -1,17 +1,20 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { IMovieItem } from "../types/interface";
 import { useRecoilState } from "recoil";
-import { bookmarkMovieListState } from "../recoil/state";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { BsFillReplyFill } from "react-icons/bs";
+import { bookmarkMovieListState } from "../recoil/state";
+import { IMovieItem } from "../types/interface";
 
 interface IProps {
   item: IMovieItem;
 }
 
+const NO_IMAGE_URL = "https://i-shop.link/assets/images/no-image.png";
+
 const MovieItem = ({ item }: IProps) => {
   const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
+
   const [isOpened, setIsOpened] = useState(false);
 
   const isBookmarked = bookMarkMovieList.map((el) => el.imdbID).includes(item.imdbID);
@@ -20,9 +23,10 @@ const MovieItem = ({ item }: IProps) => {
     setIsOpened((prev) => !prev);
   };
 
+  // TODO: 리팩토링
   const handleAddBookmark = (id: string) => {
-    if (bookMarkMovieList.map((el) => el.imdbID).includes(item.imdbID)) {
-      const newItem = bookMarkMovieList.filter((el) => el.imdbID !== item.imdbID);
+    if (isBookmarked) {
+      const newItem = bookMarkMovieList.filter((el) => el.imdbID !== id);
       setBookmarkMovieList(newItem);
       localStorage.setItem("bookmark", JSON.stringify(newItem));
     } else {
@@ -35,7 +39,7 @@ const MovieItem = ({ item }: IProps) => {
   return (
     <Container>
       <MovieItemContainer onClick={handleItemOpen}>
-        <MoviePoster src={item.Poster === "N/A" ? "https://i-shop.link/assets/images/no-image.png" : item.Poster} />
+        <MoviePoster src={item.Poster === "N/A" ? NO_IMAGE_URL : item.Poster} />
         <MovieDetailContainer>
           <MovieTitle>{item.Title}</MovieTitle>
           <MovieDetail>
@@ -64,7 +68,7 @@ const MovieItem = ({ item }: IProps) => {
 
 export default MovieItem;
 
-const Container = styled.div`
+const Container = styled.ul`
   width: 100%;
   margin-bottom: 1rem;
 `;
@@ -75,13 +79,14 @@ const MovieItemContainer = styled.li`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 3px -1px, rgba(0, 0, 0, 0.06) 0px 1px 4px -1px;
   border-radius: 2.5rem;
   margin-bottom: 0.7rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   transition: all 0.2s ease-in;
   position: relative;
 
   :hover {
-    background-color: #ffefef;
+    ${({ theme }) => theme.colors.backGroundColor};
+    background-color: ${({ theme }) => theme.colors.movieItemBackGroundColor};
     transform: scale(1.02);
   }
 `;
@@ -107,7 +112,7 @@ const MovieDetail = styled.p`
 
 const DropdownContainer = styled.div<{ isOpened: boolean }>`
   width: 100%;
-  background-color: #f6e5f5;
+  background-color: ${({ theme }) => theme.colors.dropDownItemBackGroundColor};
   border-radius: 1.5rem;
   padding: 1rem;
 `;

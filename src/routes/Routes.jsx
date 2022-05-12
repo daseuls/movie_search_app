@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
-import MovieMain from "./MovieMain";
 import styled from "styled-components";
-import NavTab from "../components/NavTab";
 import { Suspense } from "react";
+import MovieMain from "./MovieMain";
+import NavTab from "../components/NavTab";
 import Loading from "../components/Loading";
 import Bookmark from "./Bookmark";
 
