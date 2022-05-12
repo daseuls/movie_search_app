@@ -15,7 +15,7 @@ export default NavTab;
 
 const Container = styled.footer`
   ${({ theme }) => theme.flexbox("row", "space-around", "center")}
-  background-color: skyblue;
+  background-color: ${({ theme }) => theme.colors.navTabColor};
   width: 100%;
   padding: 2rem;
   border-radius: 3rem;

@@ -60,9 +60,11 @@ const Container = styled.div``;
 const MovieItemContainer = styled.li`
   ${({ theme }) => theme.flexbox("row", "flex-start", "center")}
   padding:1rem;
-  border: 1px solid gray;
-  margin-bottom: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 3px -1px, rgba(0, 0, 0, 0.06) 0px 1px 4px -1px;
   border-radius: 2rem;
+  margin-bottom: 0.5rem;
+  background-color: white;
+  cursor: pointer;
 `;
 
 const MoviePoster = styled.img`

@@ -31,7 +31,7 @@ const Container = styled.section`
   ${({ theme }) => theme.flexbox("column", "space-between", "center")}
   height: 55rem;
   width: 27rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.backGroundColor};
   border-radius: 3rem;
   border: 3px solid gray;
   overflow: auto;

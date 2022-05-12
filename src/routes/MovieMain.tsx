@@ -46,8 +46,14 @@ const MovieMain = () => {
 export default MovieMain;
 
 const Container = styled.main`
+  width: 90%;
   height: 100%;
   overflow: auto;
+  margin: 7rem 0 6rem;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const MovieListContainer = styled.ul``;
