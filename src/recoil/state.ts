@@ -1,6 +1,7 @@
 import { atom, selector } from "recoil";
 import { getMovieData } from "../utils/fetchData";
 import { v4 } from "uuid";
+import { IMovieItem, IMovieResponse } from "../types/interface";
 
 export const keywordState = atom({
   key: `#keywordState/${v4()}`,
@@ -12,21 +13,20 @@ export const pageState = atom({
   default: 1,
 });
 
-export const movieListState = atom({
+export const movieListState = atom<IMovieResponse>({
   key: `#movieListState/${v4()}`,
-  default: [],
+  default: { Response: "False", Error: "hi" },
 });
 
-export const getMovieListSelector = selector({
-  key: `movieList/get/${v4()}`,
-  get: async ({ get }) => {
-    const keyword = get(keywordState);
-    const page = get(pageState);
-    if (keyword) {
-      const data = await getMovieData(keyword, page);
-      console.log(data?.data);
-      return data?.data;
-    }
-    return { Response: "False", Error: "Movie not found!" };
-  },
-});
+// export const getMovieListSelector = selector({
+//   key: `movieList/get/${v4()}`,
+//   get: async ({ get }) => {
+//     const keyword = get(keywordState);
+
+//     if (keyword) {
+//       const data = await getMovieData(keyword, 1);
+//       return data?.data;
+//     }
+//     return { Response: "False", Error: "Movie not found!" };
+//   },
+// });

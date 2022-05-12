@@ -11,6 +11,8 @@ export interface IMovieItem {
   imdbID: string;
   Type: string;
   Poster: string;
+  isSelected?: boolean;
+  isLiked?: boolean;
 }
 
 export interface IFetchConfig {

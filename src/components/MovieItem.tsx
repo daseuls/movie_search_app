@@ -1,25 +1,47 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { IMovieItem } from "../types/interface";
+import { useRecoilState } from "recoil";
+import { movieListState } from "../recoil/state";
 
 interface IProps {
   item: IMovieItem;
 }
 
 const MovieItem = ({ item }: IProps) => {
+  const [movieList, setMovieList] = useRecoilState(movieListState);
+  const [isOpened, setIsOpened] = useState(false);
+
+  const handleItemOpen = () => {
+    setIsOpened((prev) => !prev);
+  };
+
   return (
-    <MovieItemContainer>
-      <MoviePoster src={item.Poster} />
-      <MovieDetailContainer>
-        <MovieTitle>{item.Title}</MovieTitle>
-        <MovieDetail>
-          {item.Year} | {item.Type}
-        </MovieDetail>
-      </MovieDetailContainer>
-    </MovieItemContainer>
+    <Container>
+      <MovieItemContainer onClick={handleItemOpen}>
+        <MoviePoster src={item.Poster} />
+        <MovieDetailContainer>
+          <MovieTitle>{item.Title}</MovieTitle>
+          <MovieDetail>
+            {item.Year} | {item.Type}
+          </MovieDetail>
+        </MovieDetailContainer>
+      </MovieItemContainer>
+      {isOpened ? (
+        <div>
+          <button type="button">즐겨찾기 추가</button>
+          <button onClick={handleItemOpen} type="button">
+            닫힘
+          </button>
+        </div>
+      ) : null}
+    </Container>
   );
 };
 
 export default MovieItem;
+
+const Container = styled.div``;
 
 const MovieItemContainer = styled.li`
   ${({ theme }) => theme.flexbox("row", "flex-start", "center")}
