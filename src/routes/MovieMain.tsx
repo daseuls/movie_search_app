@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import SearchBar from "../components/SearcBar";
 import MovieItem from "../components/MovieItem";
-import { IMovieResponse, IMovieItem } from "../types/interface";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { movieListState, keywordState, bookmarkMovieListState } from "../recoil/state";
 import NotFound from "../components/NotFound";

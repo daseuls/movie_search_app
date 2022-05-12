@@ -1,5 +1,4 @@
-import { atom, selector } from "recoil";
-import { getMovieData } from "../utils/fetchData";
+import { atom } from "recoil";
 import { v4 } from "uuid";
 import { IMovieItem, IMovieResponse } from "../types/interface";
 

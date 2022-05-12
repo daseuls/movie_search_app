@@ -3,9 +3,17 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { bookmarkMovieListState } from "../recoil/state";
 import MovieItem from "../components/MovieItem";
 import { AiOutlineSearch, AiTwotoneHeart } from "react-icons/ai";
+import { useEffect } from "react";
 
 const Bookmark = () => {
   const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
+
+  useEffect(() => {
+    const localData = localStorage.getItem("bookmark");
+    if (localData) {
+      setBookmarkMovieList(JSON.parse(localData));
+    }
+  }, [setBookmarkMovieList]);
 
   return (
     <Container>
