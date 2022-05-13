@@ -14,7 +14,6 @@ const NO_IMAGE_URL = "https://i-shop.link/assets/images/no-image.png";
 
 const MovieItem = ({ item }: IProps) => {
   const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
-
   const [isOpened, setIsOpened] = useState(false);
 
   const isBookmarked = bookMarkMovieList.map((el) => el.imdbID).includes(item.imdbID);
