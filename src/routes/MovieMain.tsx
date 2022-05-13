@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, RefObject, MutableRefObject } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { AiOutlineUnorderedList } from "react-icons/ai";
@@ -7,6 +7,8 @@ import MovieItem from "../components/MovieItem";
 import { movieListState, bookmarkMovieListState, keywordState, pageState } from "../recoil/state";
 import NotFound from "../components/NotFound";
 import { getMovieData } from "../utils/fetchData";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import Loading from "../components/Loading";
 
 const MovieMain = () => {
   const movieList = useRecoilValue(movieListState);
@@ -19,8 +21,6 @@ const MovieMain = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const parentObservedTarget = useRef<any>(null);
-
-  console.log("", movieList);
 
   const getMoreMovieList = async () => {
     setIsLoading(true);
@@ -60,25 +60,32 @@ const MovieMain = () => {
   }, [setBookmarkMovieList]);
 
   return (
-    <Container ref={parentObservedTarget}>
-      <SearchBar setIsLoading={setIsLoading} />
-      {movieList.Response === "True" ? (
-        <MovieListContainer>
-          <TotalContainer>
-            <AiOutlineUnorderedList size={20} />
-            <MovieTotal>Total {movieList.totalResults}</MovieTotal>
-          </TotalContainer>
-          <MovieListSubContainer>
-            {movieList?.Search?.map((movie, i) => (
-              <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
-            ))}
-            <div ref={setTarget}>{!isLoading && <div>로딩중...</div>}</div>
-          </MovieListSubContainer>
-        </MovieListContainer>
-      ) : (
-        <NotFound error={movieList.Error} />
-      )}
-    </Container>
+    <DragDropContext onDragEnd={() => {}}>
+      <Container ref={parentObservedTarget}>
+        <SearchBar setIsLoading={setIsLoading} />
+        {movieList.Response === "True" ? (
+          <MovieListContainer>
+            <TotalContainer>
+              <AiOutlineUnorderedList size={20} />
+              <MovieTotal>Total {movieList.totalResults}</MovieTotal>
+            </TotalContainer>
+            <Droppable droppableId="bookmarkList" isDropDisabled>
+              {(provided) => (
+                <MovieListSubContainer ref={provided.innerRef}>
+                  {movieList?.Search?.map((movie, i) => (
+                    <MovieItem key={`${i}${movie.imdbID}`} item={movie} index={i} />
+                  ))}
+                  <div ref={setTarget}>{!isLoading && <Loading />}</div>
+                  {provided.placeholder}
+                </MovieListSubContainer>
+              )}
+            </Droppable>
+          </MovieListContainer>
+        ) : (
+          <NotFound error={movieList.Error} />
+        )}
+      </Container>
+    </DragDropContext>
   );
 };
 
@@ -97,7 +104,9 @@ const Container = styled.main`
 
 const MovieListContainer = styled.ul``;
 
-const MovieListSubContainer = styled.div``;
+const MovieListSubContainer = styled.div`
+  ${({ theme }) => theme.flexbox("column", "flex-start", "center")}
+`;
 const MovieTotal = styled.p`
   font-size: 1.4rem;
   padding: 0.8rem 0.5rem;

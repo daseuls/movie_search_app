@@ -7,10 +7,13 @@ import { theme } from "./styles/theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <>
     <GlobalStyle />
     <ThemeProvider theme={theme}>
       <Router />
     </ThemeProvider>
-  </React.StrictMode>
+  </>
+
+  // </React.StrictMode>
 );

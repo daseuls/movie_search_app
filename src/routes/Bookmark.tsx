@@ -4,6 +4,7 @@ import { AiTwotoneHeart } from "react-icons/ai";
 import { useEffect } from "react";
 import { bookmarkMovieListState } from "../recoil/state";
 import MovieItem from "../components/MovieItem";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 const Bookmark = () => {
   const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
@@ -15,16 +16,40 @@ const Bookmark = () => {
     }
   }, [setBookmarkMovieList]);
 
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    if (destination.index === source.index) return;
+    const dragItemIndex = source.index;
+    const dropDestinationIndex = destination.index;
+    let add;
+    const bookmarkList = [...bookMarkMovieList];
+    add = bookmarkList[dragItemIndex];
+    bookmarkList.splice(dragItemIndex, 1);
+    bookmarkList.splice(dropDestinationIndex, 0, add);
+    setBookmarkMovieList(bookmarkList);
+    localStorage.setItem("bookmark", JSON.stringify(bookmarkList));
+  };
+
   return (
-    <Container>
-      <TitleContainer>
-        <AiTwotoneHeart size={30} color="FFC7C7" />
-        <Title>My Bookmark ({bookMarkMovieList.length})</Title>
-      </TitleContainer>
-      {bookMarkMovieList.map((movie, i) => (
-        <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
-      ))}
-    </Container>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Container>
+        <TitleContainer>
+          <AiTwotoneHeart size={30} color="FFC7C7" />
+          <Title>My Bookmark ({bookMarkMovieList.length})</Title>
+        </TitleContainer>
+        <Droppable droppableId="bookmarkList">
+          {(provided) => (
+            <BookmarkContainer ref={provided.innerRef} {...provided.droppableProps}>
+              {bookMarkMovieList.map((movie, i) => (
+                <MovieItem key={`${i}${movie.imdbID}`} item={movie} index={i} />
+              ))}
+              {provided.placeholder}
+            </BookmarkContainer>
+          )}
+        </Droppable>
+      </Container>
+    </DragDropContext>
   );
 };
 
@@ -39,6 +64,8 @@ const Container = styled.div`
     display: none;
   }
 `;
+
+const BookmarkContainer = styled.div``;
 const Title = styled.p`
   font-size: 2.3rem;
   margin-left: 0.5rem;

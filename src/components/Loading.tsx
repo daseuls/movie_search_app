@@ -1,17 +1,7 @@
-import styled from "styled-components";
+import ReactLoading from "react-loading";
 
 const Loading = () => {
-  return (
-    <Container>
-      <p>Loading</p>
-    </Container>
-  );
+  return <ReactLoading type="spin" color="#EDA1C1" height={35} width={35} />;
 };
 
 export default Loading;
-
-const Container = styled.div`
-  height: 100%;
-  background-color: red;
-  width: 100%;
-`;
