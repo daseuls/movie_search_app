@@ -9,7 +9,7 @@ export const keywordState = atom({
 
 export const pageState = atom({
   key: `#pageState/${v4()}`,
-  default: 1,
+  default: 2,
 });
 
 export const movieListState = atom<IMovieResponse>({
