@@ -1,20 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useRef, Suspense } from "react";
 import { RecoilRoot } from "recoil";
 import styled from "styled-components";
-import { Suspense } from "react";
 import MovieMain from "./MovieMain";
 import NavTab from "../components/NavTab";
 import Loading from "../components/Loading";
 import Bookmark from "./Bookmark";
 
 const Router = () => {
+  const routesRef = useRef();
   return (
     <BrowserRouter>
       <RecoilRoot>
-        <Container>
+        <Container ref={routesRef}>
           <Suspense fallback={<Loading />}>
             <Routes>
-              <Route path="/" element={<MovieMain />} />
+              <Route path="/" element={<MovieMain routesRef={routesRef} />} />
               <Route path="/bookmark" element={<Bookmark />} />
             </Routes>
             <NavTab />
