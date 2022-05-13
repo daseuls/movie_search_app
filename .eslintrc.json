@@ -1,5 +1,12 @@
 {
-  "extends": ["airbnb", "airbnb/hooks", "react-app", "plugin:prettier/recommended"],
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "react-app",
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
   "env": {
     "browser": true,
     "jasmine": true,
@@ -46,7 +53,7 @@
 
     // "no-shadow": "off",
     // "no-unused-expressions": ["warn"],
-    // "consistent-return": "off",
+    "consistent-return": "off",
     // "@typescript-eslint/no-shadow": ["error"],
     // "@typescript-eslint/camelcase": "off",
     // "@typescript-eslint/unbound-method": "off",
