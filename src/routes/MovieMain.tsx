@@ -69,7 +69,7 @@ const MovieMain = () => {
               <AiOutlineUnorderedList size={20} />
               <MovieTotal>Total {movieList.totalResults}</MovieTotal>
             </TotalContainer>
-            <Droppable droppableId="bookmarkList" isDropDisabled>
+            <Droppable droppableId="bookmarkLi" isDropDisabled>
               {(provided) => (
                 <MovieListSubContainer ref={provided.innerRef}>
                   {movieList?.Search?.map((movie, i) => (
