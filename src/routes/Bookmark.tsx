@@ -4,7 +4,7 @@ import { AiTwotoneHeart } from "react-icons/ai";
 import { useEffect } from "react";
 import { bookmarkMovieListState } from "../recoil/state";
 import MovieItem from "../components/MovieItem";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
 const Bookmark = () => {
   const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
@@ -42,7 +42,19 @@ const Bookmark = () => {
           {(provided) => (
             <BookmarkContainer ref={provided.innerRef} {...provided.droppableProps}>
               {bookMarkMovieList.map((movie, i) => (
-                <MovieItem key={`${i}${movie.imdbID}`} item={movie} index={i} />
+                <div key={`${i}${movie.imdbID}`}>
+                  <Draggable draggableId={`${i}${movie.imdbID}`} index={i}>
+                    {(draggableProvided) => (
+                      <div
+                        {...draggableProvided.draggableProps}
+                        {...draggableProvided.dragHandleProps}
+                        ref={draggableProvided.innerRef}
+                      >
+                        <MovieItem key={`${i}${movie.imdbID}`} item={movie} index={i} />
+                      </div>
+                    )}
+                  </Draggable>
+                </div>
               ))}
               {provided.placeholder}
             </BookmarkContainer>

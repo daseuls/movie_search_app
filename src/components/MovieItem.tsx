@@ -38,40 +38,32 @@ const MovieItem = ({ item, index }: IProps) => {
   };
 
   return (
-    <Draggable draggableId={item.imdbID} index={index}>
-      {(provided) => (
-        <Container {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-          <MovieItemContainer onClick={handleItemOpen}>
-            <MoviePoster src={item.Poster === "N/A" ? NO_IMAGE_URL : item.Poster} />
-            <MovieDetailContainer>
-              <MovieTitle>{item.Title}</MovieTitle>
-              <MovieDetail>
-                {item.Year} | {item.Type}
-              </MovieDetail>
-            </MovieDetailContainer>
-            {isBookmarked ? (
-              <HeartIcon>
-                <AiTwotoneHeart size={30} color="EDA1C1" />
-              </HeartIcon>
-            ) : null}
-          </MovieItemContainer>
-          {isOpened ? (
-            <DropdownContainer isOpened={isOpened}>
-              <BookmarkBtn onClick={() => handleAddBookmark(item.imdbID)} type="button">
-                {isBookmarked ? (
-                  <AiTwotoneHeart size={20} color="EDA1C1" />
-                ) : (
-                  <AiOutlineHeart size={20} color="EDA1C1" />
-                )}
-              </BookmarkBtn>
-              <CloseBtn onClick={handleItemOpen} type="button">
-                <BsFillReplyFill size={20} color="EDA1C1" />
-              </CloseBtn>
-            </DropdownContainer>
-          ) : null}
-        </Container>
-      )}
-    </Draggable>
+    <Container>
+      <MovieItemContainer onClick={handleItemOpen}>
+        <MoviePoster src={item.Poster === "N/A" ? NO_IMAGE_URL : item.Poster} />
+        <MovieDetailContainer>
+          <MovieTitle>{item.Title}</MovieTitle>
+          <MovieDetail>
+            {item.Year} | {item.Type}
+          </MovieDetail>
+        </MovieDetailContainer>
+        {isBookmarked ? (
+          <HeartIcon>
+            <AiTwotoneHeart size={30} color="EDA1C1" />
+          </HeartIcon>
+        ) : null}
+      </MovieItemContainer>
+      {isOpened ? (
+        <DropdownContainer isOpened={isOpened}>
+          <BookmarkBtn onClick={() => handleAddBookmark(item.imdbID)} type="button">
+            {isBookmarked ? <AiTwotoneHeart size={20} color="EDA1C1" /> : <AiOutlineHeart size={20} color="EDA1C1" />}
+          </BookmarkBtn>
+          <CloseBtn onClick={handleItemOpen} type="button">
+            <BsFillReplyFill size={20} color="EDA1C1" />
+          </CloseBtn>
+        </DropdownContainer>
+      ) : null}
+    </Container>
   );
 };
 
