@@ -17,5 +17,5 @@
 
 1. 오픈 API를 이용한 영화 검색
 2. Web API Intersection Observer를 이용한 무한 스크롤
-3. Recoil과 localStorage를 이용한 전역 상태 관리, 로컬 데이터 저장
+3. Recoil과 localStorage를 이용한 전역 상태 관리, 로컬 데이터 저장(북마크)
 4. react-beautiful-dnd를 이용한 북마크 리스트 드래그 앤 드롭
