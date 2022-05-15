@@ -24,6 +24,7 @@ const Bookmark = () => {
     const dropDestinationIndex = destination.index;
     let add;
     const bookmarkList = [...bookMarkMovieList];
+    // eslint-disable-next-line prefer-const
     add = bookmarkList[dragItemIndex];
     bookmarkList.splice(dragItemIndex, 1);
     bookmarkList.splice(dropDestinationIndex, 0, add);
