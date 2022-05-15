@@ -32,6 +32,7 @@ const MovieMain = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleObserver: IntersectionObserverCallback = (entry) => {
     if (entry[0].isIntersecting && !isLoading) {
       setTimeout(() => {
