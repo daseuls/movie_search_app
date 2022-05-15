@@ -6,7 +6,6 @@ const BASE_URL = "http://www.omdbapi.com/";
 const fetchData = async (config: IFetchConfig) => {
   const instance = axios.create({
     baseURL: BASE_URL,
-    timeout: 1000,
   });
   try {
     const res = await instance.get(`?apikey=92e32667`, { params: config });
