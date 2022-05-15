@@ -20,7 +20,7 @@ const MovieMain = () => {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const parentObservedTarget = useRef<any>(null);
+  const parentObservedTarget = useRef<HTMLElement>(null);
 
   const getMoreMovieList = async () => {
     setIsLoading(true);
@@ -32,7 +32,8 @@ const MovieMain = () => {
     }
   };
 
-  const handleObserver = (entry: any) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleObserver: IntersectionObserverCallback = (entry) => {
     if (entry[0].isIntersecting && !isLoading) {
       setTimeout(() => {
         getMoreMovieList();
@@ -41,7 +42,7 @@ const MovieMain = () => {
   };
 
   useEffect(() => {
-    let observer: any;
+    let observer: IntersectionObserver;
     if (target) {
       observer = new IntersectionObserver(handleObserver, {
         root: parentObservedTarget.current,

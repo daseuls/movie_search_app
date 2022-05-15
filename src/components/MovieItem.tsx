@@ -24,16 +24,18 @@ const MovieItem = ({ item, index }: IProps) => {
     setIsOpened((prev) => !prev);
   };
 
-  // TODO: 리팩토링
+  const setLocalStorageValue = (key: string, value: IMovieItem[]) => {
+    setBookmarkMovieList(value);
+    localStorage.setItem(key, JSON.stringify(value));
+  };
+
   const handleAddBookmark = (id: string) => {
     if (isBookmarked) {
       const newItem = bookMarkMovieList.filter((el) => el.imdbID !== id);
-      setBookmarkMovieList(newItem);
-      localStorage.setItem("bookmark", JSON.stringify(newItem));
+      setLocalStorageValue("bookmark", newItem);
     } else {
       const newItem = [...bookMarkMovieList, item];
-      setBookmarkMovieList(newItem);
-      localStorage.setItem("bookmark", JSON.stringify(newItem));
+      setLocalStorageValue("bookmark", newItem);
     }
   };
 
@@ -99,6 +101,7 @@ const MoviePoster = styled.img`
 `;
 
 const MovieDetailContainer = styled.div`
+  width: 70%;
   margin-left: 1rem;
 `;
 

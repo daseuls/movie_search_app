@@ -1,11 +1,15 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useSetRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { AiOutlineSearch } from "react-icons/ai";
 import styled from "styled-components";
 import { keywordState, movieListState, pageState } from "../recoil/state";
 import { getMovieData } from "../utils/fetchData";
 
-const SearchBar = ({ setIsLoading }: any) => {
+interface ISearchBarProps {
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SearchBar = ({ setIsLoading }: ISearchBarProps) => {
   const setKeyword = useSetRecoilState(keywordState);
   const setMovieList = useSetRecoilState(movieListState);
   const setPageReset = useResetRecoilState(pageState);
