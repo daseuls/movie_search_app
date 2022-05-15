@@ -12,6 +12,7 @@ const fetchData = async (config: IFetchConfig) => {
     const res = await instance.get(`?apikey=${process.env.REACT_APP_API_KEY}`, { params: config });
     return res;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 };
