@@ -19,6 +19,3 @@
 2. Web API Intersection Observer를 이용한 무한 스크롤
 3. Recoil과 localStorage를 이용한 전역 상태 관리, 로컬 데이터 저장
 4. react-beautiful-dnd를 이용한 북마크 리스트 드래그 앤 드롭
-5.
-
-# 어려웠던 점 / 해결 과정

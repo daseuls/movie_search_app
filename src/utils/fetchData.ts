@@ -10,9 +10,9 @@ const fetchData = async (config: IFetchConfig) => {
   });
   try {
     const res = await instance.get(`?apikey=92e32667`, { params: config });
+
     return res;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.log(error);
   }
 };
