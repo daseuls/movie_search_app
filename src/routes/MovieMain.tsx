@@ -2,13 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { AiOutlineUnorderedList } from "react-icons/ai";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { movieListState, bookmarkMovieListState, keywordState, pageState } from "../recoil/state";
 import SearchBar from "../components/SearcBar";
 import MovieItem from "../components/MovieItem";
-import { movieListState, bookmarkMovieListState, keywordState, pageState } from "../recoil/state";
+import Loading from "../components/Loading";
 import NotFound from "../components/NotFound";
 import { getMovieData } from "../utils/fetchData";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import Loading from "../components/Loading";
 
 const MovieMain = () => {
   const movieList = useRecoilValue(movieListState);
@@ -32,7 +32,6 @@ const MovieMain = () => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleObserver: IntersectionObserverCallback = (entry) => {
     if (entry[0].isIntersecting && !isLoading) {
       setTimeout(() => {
@@ -65,7 +64,7 @@ const MovieMain = () => {
       <Container ref={parentObservedTarget}>
         <SearchBar setIsLoading={setIsLoading} />
         {movieList.Response === "True" ? (
-          <MovieListContainer>
+          <ul>
             <TotalContainer>
               <AiOutlineUnorderedList size={20} />
               <MovieTotal>Total {movieList.totalResults}</MovieTotal>
@@ -74,14 +73,14 @@ const MovieMain = () => {
               {(provided) => (
                 <MovieListSubContainer ref={provided.innerRef}>
                   {movieList?.Search?.map((movie, i) => (
-                    <MovieItem key={`${i}${movie.imdbID}`} item={movie} index={i} />
+                    <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
                   ))}
                   <div ref={setTarget}>{!isLoading && <Loading />}</div>
                   {provided.placeholder}
                 </MovieListSubContainer>
               )}
             </Droppable>
-          </MovieListContainer>
+          </ul>
         ) : (
           <NotFound error={movieList.Error} />
         )}
@@ -95,22 +94,21 @@ export default MovieMain;
 const Container = styled.main`
   width: 90%;
   height: 100%;
-  overflow: auto;
   margin: 8rem 0 10rem;
+  overflow: auto;
 
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const MovieListContainer = styled.ul``;
-
 const MovieListSubContainer = styled.div`
   ${({ theme }) => theme.flexbox("column", "flex-start", "center")}
 `;
+
 const MovieTotal = styled.p`
-  font-size: 1.4rem;
   padding: 0.8rem 0.5rem;
+  font-size: 1.4rem;
 `;
 
 const TotalContainer = styled.div`

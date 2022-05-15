@@ -40,7 +40,7 @@ const Bookmark = () => {
         </TitleContainer>
         <Droppable droppableId="bookmarkList">
           {(provided) => (
-            <BookmarkContainer ref={provided.innerRef} {...provided.droppableProps}>
+            <div ref={provided.innerRef} {...provided.droppableProps}>
               {bookMarkMovieList.map((movie, i) => (
                 <div key={`${i}${movie.imdbID}`}>
                   <Draggable draggableId={`${i}${movie.imdbID}`} index={i}>
@@ -50,14 +50,14 @@ const Bookmark = () => {
                         {...draggableProvided.dragHandleProps}
                         ref={draggableProvided.innerRef}
                       >
-                        <MovieItem key={`${i}${movie.imdbID}`} item={movie} index={i} />
+                        <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
                       </div>
                     )}
                   </Draggable>
                 </div>
               ))}
               {provided.placeholder}
-            </BookmarkContainer>
+            </div>
           )}
         </Droppable>
       </Container>
@@ -68,8 +68,8 @@ const Bookmark = () => {
 export default Bookmark;
 
 const Container = styled.div`
-  margin: 7rem 0 10rem;
   width: 90%;
+  margin: 7rem 0 10rem;
   overflow: auto;
 
   ::-webkit-scrollbar {
@@ -77,11 +77,10 @@ const Container = styled.div`
   }
 `;
 
-const BookmarkContainer = styled.div``;
 const Title = styled.p`
-  font-size: 2.3rem;
   margin-left: 0.5rem;
   color: #22577e;
+  font-size: 2.3rem;
 `;
 
 const TitleContainer = styled.div`

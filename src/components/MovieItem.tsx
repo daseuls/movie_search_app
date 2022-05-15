@@ -5,16 +5,14 @@ import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { BsFillReplyFill } from "react-icons/bs";
 import { bookmarkMovieListState } from "../recoil/state";
 import { IMovieItem } from "../types/interface";
-import { Draggable } from "react-beautiful-dnd";
 
 interface IProps {
   item: IMovieItem;
-  index: number;
 }
 
 const NO_IMAGE_URL = "https://i-shop.link/assets/images/no-image.png";
 
-const MovieItem = ({ item, index }: IProps) => {
+const MovieItem = ({ item }: IProps) => {
   const [bookMarkMovieList, setBookmarkMovieList] = useRecoilState(bookmarkMovieListState);
   const [isOpened, setIsOpened] = useState(false);
 
@@ -78,14 +76,14 @@ const Container = styled.ul`
 
 const MovieItemContainer = styled.li`
   ${({ theme }) => theme.flexbox("row", "flex-start", "center")}
-  padding:1rem 2rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 3px -1px, rgba(0, 0, 0, 0.06) 0px 1px 4px -1px;
-  border-radius: 2.5rem;
-  margin-bottom: 0.7rem;
-  background-color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
-  transition: all 0.2s ease-in;
   position: relative;
+  padding: 1rem 2rem;
+  margin-bottom: 0.7rem;
+  border-radius: 2.5rem;
+  background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 3px -1px, rgba(0, 0, 0, 0.06) 0px 1px 4px -1px;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
 
   :hover {
     ${({ theme }) => theme.colors.backGroundColor};
@@ -106,24 +104,24 @@ const MovieDetailContainer = styled.div`
 `;
 
 const MovieTitle = styled.p`
-  font-weight: 700;
   font-size: 1.2rem;
+  font-weight: 700;
 `;
 
 const MovieDetail = styled.p`
-  color: gray;
+  color: ${({ theme }) => theme.colors.textGray};
 `;
 
 const DropdownContainer = styled.div<{ isOpened: boolean }>`
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.dropDownItemBackGroundColor};
-  border-radius: 1.5rem;
   padding: 1rem;
+  border-radius: 1.5rem;
+  background-color: ${({ theme }) => theme.colors.dropDownItemBackGroundColor};
 `;
 
 const BookmarkBtn = styled.button`
   width: 50%;
-  border-right: 1px solid #eda1c1;
+  border-right: 1px solid ${({ theme }) => theme.colors.heartIconColor}; ;
 `;
 
 const CloseBtn = styled.button`

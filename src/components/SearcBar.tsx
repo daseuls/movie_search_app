@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { useSetRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useSetRecoilState, useResetRecoilState } from "recoil";
 import { AiOutlineSearch } from "react-icons/ai";
 import styled from "styled-components";
 import { keywordState, movieListState, pageState } from "../recoil/state";
@@ -48,25 +48,25 @@ const SearchBar = ({ setIsLoading }: ISearchBarProps) => {
 export default SearchBar;
 
 const Container = styled.nav`
-  margin: 3rem 0 2rem;
   position: absolute;
-  width: 90%;
   top: 0;
+  width: 90%;
+  margin: 3rem 0 2rem;
 `;
 
 const SearchBarForm = styled.form`
+  ${({ theme }) => theme.flexbox("row", "flex-end", "center")}
   position: relative;
   width: 100%;
-  ${({ theme }) => theme.flexbox("row", "flex-end", "center")}
 `;
 
 const SearchBarInput = styled.input`
-  border: 2px solid ${({ theme }) => theme.colors.navTabColor};
-  border-radius: 3rem;
   width: 100%;
   padding: 1.5rem;
-  background-color: white;
   font-size: 1.2em;
+  border: 2px solid ${({ theme }) => theme.colors.navTabColor};
+  border-radius: 3rem;
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const SearchBtn = styled.button`

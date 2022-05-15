@@ -12,7 +12,9 @@ const colors = {
   backGroundColor: "#FFFDF9",
   navTabColor: "#DAF1F9",
   textColor: "#DEFCF9",
+  textGray: "#808080",
   heartIconColor: "#EDA1C1",
+  tabHeartIconColor: "#ffc7c7",
   movieItemBackGroundColor: "#ffefef",
   dropDownItemBackGroundColor: "#f6e5f5",
 };

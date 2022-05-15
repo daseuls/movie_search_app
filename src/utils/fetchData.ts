@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IFetchConfig } from "../types/interface";
 
-const BASE_URL = "http://www.omdbapi.com/";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const fetchData = async (config: IFetchConfig) => {
   const instance = axios.create({
