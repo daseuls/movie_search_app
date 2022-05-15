@@ -1,10 +1,12 @@
-import { useEffect, useState, useRef, RefObject, MutableRefObject } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { AiOutlineUnorderedList } from "react-icons/ai";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { movieListState, bookmarkMovieListState, keywordState, pageState } from "../recoil/state";
 import SearchBar from "../components/SearcBar";
 import MovieItem from "../components/MovieItem";
-import { movieListState, bookmarkMovieListState, keywordState, pageState } from "../recoil/state";
+import Loading from "../components/Loading";
 import NotFound from "../components/NotFound";
 import { getMovieData } from "../utils/fetchData";
 
@@ -18,9 +20,7 @@ const MovieMain = () => {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const parentObservedTarget = useRef<any>(null);
-
-  console.log("", movieList);
+  const parentObservedTarget = useRef<HTMLElement>(null);
 
   const getMoreMovieList = async () => {
     setIsLoading(true);
@@ -32,7 +32,7 @@ const MovieMain = () => {
     }
   };
 
-  const handleObserver = (entry: any) => {
+  const handleObserver: IntersectionObserverCallback = (entry) => {
     if (entry[0].isIntersecting && !isLoading) {
       setTimeout(() => {
         getMoreMovieList();
@@ -41,7 +41,7 @@ const MovieMain = () => {
   };
 
   useEffect(() => {
-    let observer: any;
+    let observer: IntersectionObserver;
     if (target) {
       observer = new IntersectionObserver(handleObserver, {
         root: parentObservedTarget.current,
@@ -60,25 +60,32 @@ const MovieMain = () => {
   }, [setBookmarkMovieList]);
 
   return (
-    <Container ref={parentObservedTarget}>
-      <SearchBar setIsLoading={setIsLoading} />
-      {movieList.Response === "True" ? (
-        <MovieListContainer>
-          <TotalContainer>
-            <AiOutlineUnorderedList size={20} />
-            <MovieTotal>Total {movieList.totalResults}</MovieTotal>
-          </TotalContainer>
-          <MovieListSubContainer>
-            {movieList?.Search?.map((movie, i) => (
-              <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
-            ))}
-            <div ref={setTarget}>{!isLoading && <div>로딩중...</div>}</div>
-          </MovieListSubContainer>
-        </MovieListContainer>
-      ) : (
-        <NotFound error={movieList.Error} />
-      )}
-    </Container>
+    <DragDropContext onDragEnd={() => {}}>
+      <Container ref={parentObservedTarget}>
+        <SearchBar setIsLoading={setIsLoading} />
+        {movieList.Response === "True" ? (
+          <ul>
+            <TotalContainer>
+              <AiOutlineUnorderedList size={20} />
+              <MovieTotal>Total {movieList.totalResults}</MovieTotal>
+            </TotalContainer>
+            <Droppable droppableId="bookmarkLi" isDropDisabled>
+              {(provided) => (
+                <MovieListSubContainer ref={provided.innerRef}>
+                  {movieList?.Search?.map((movie, i) => (
+                    <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
+                  ))}
+                  <div ref={setTarget}>{!isLoading && <Loading />}</div>
+                  {provided.placeholder}
+                </MovieListSubContainer>
+              )}
+            </Droppable>
+          </ul>
+        ) : (
+          <NotFound error={movieList.Error} />
+        )}
+      </Container>
+    </DragDropContext>
   );
 };
 
@@ -87,20 +94,21 @@ export default MovieMain;
 const Container = styled.main`
   width: 90%;
   height: 100%;
-  overflow: auto;
   margin: 8rem 0 10rem;
+  overflow: auto;
 
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const MovieListContainer = styled.ul``;
+const MovieListSubContainer = styled.div`
+  ${({ theme }) => theme.flexbox("column", "flex-start", "center")}
+`;
 
-const MovieListSubContainer = styled.div``;
 const MovieTotal = styled.p`
-  font-size: 1.4rem;
   padding: 0.8rem 0.5rem;
+  font-size: 1.4rem;
 `;
 
 const TotalContainer = styled.div`

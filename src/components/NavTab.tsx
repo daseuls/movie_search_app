@@ -24,12 +24,12 @@ export default NavTab;
 
 const Container = styled.footer`
   ${({ theme }) => theme.flexbox("row", "space-around", "center")}
-  background-color: ${({ theme }) => theme.colors.navTabColor};
+  position: absolute;
   width: 100%;
   padding: 3rem;
-  border-radius: 5rem;
-  position: absolute;
   bottom: 0;
+  border-radius: 5rem;
+  background-color: ${({ theme }) => theme.colors.navTabColor};
 `;
 
 const NavBtn = styled.button`
@@ -38,13 +38,13 @@ const NavBtn = styled.button`
 `;
 
 const Dot = styled.div`
-  background-color: #9ad0ec;
   width: 0.4rem;
   height: 0.4rem;
-  border-radius: 50%;
   margin-top: 0.4rem;
+  border-radius: 50%;
+  background-color: #9ad0ec;
 `;
 
 const LikeDot = styled(Dot)`
-  background-color: #ffc7c7;
+  background-color: ${({ theme }) => theme.colors.tabHeartIconColor};
 `;
