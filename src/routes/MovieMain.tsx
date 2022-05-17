@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { AiOutlineUnorderedList } from "react-icons/ai";
@@ -22,7 +22,7 @@ const MovieMain = () => {
 
   const parentObservedTarget = useRef<HTMLElement>(null);
 
-  const getMoreMovieList = async () => {
+  const getMoreMovieList = useCallback(async () => {
     setIsLoading(true);
     const res = await getMovieData(keyword, page);
     if (res?.data?.Response === "True") {
@@ -30,15 +30,18 @@ const MovieMain = () => {
       setIsLoading(false);
       setPage(page + 1);
     }
-  };
+  }, [keyword, page, setMovieList, setPage]);
 
-  const handleObserver: IntersectionObserverCallback = (entry) => {
-    if (entry[0].isIntersecting && !isLoading) {
-      setTimeout(() => {
-        getMoreMovieList();
-      }, 1000);
-    }
-  };
+  const handleObserver: IntersectionObserverCallback = useCallback(
+    (entry) => {
+      if (entry[0].isIntersecting && !isLoading) {
+        setTimeout(() => {
+          getMoreMovieList();
+        }, 1000);
+      }
+    },
+    [getMoreMovieList, isLoading]
+  );
 
   useEffect(() => {
     let observer: IntersectionObserver;
