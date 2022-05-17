@@ -6,7 +6,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const fetchData = async (config: IFetchConfig) => {
   const instance = axios.create({
     baseURL: BASE_URL,
-    timeout: 1000,
+    timeout: 10000,
   });
   try {
     const res = await instance.get(`?apikey=${process.env.REACT_APP_API_KEY}`, { params: config });
