@@ -1,13 +1,11 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
-import { AiOutlineUnorderedList } from "react-icons/ai";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
 import { movieListState, bookmarkMovieListState, keywordState, pageState } from "../recoil/state";
 import SearchBar from "../components/SearcBar";
-import MovieItem from "../components/MovieItem";
-import Loading from "../components/Loading";
 import NotFound from "../components/NotFound";
+import { MovieList } from "../components/MovieList";
 import { getMovieData } from "../utils/fetchData";
 
 const MovieMain = () => {
@@ -67,23 +65,7 @@ const MovieMain = () => {
       <Container ref={parentObservedTarget}>
         <SearchBar setIsLoading={setIsLoading} />
         {movieList.Response === "True" ? (
-          <ul>
-            <TotalContainer>
-              <AiOutlineUnorderedList size={20} />
-              <MovieTotal>Total {movieList.totalResults}</MovieTotal>
-            </TotalContainer>
-            <Droppable droppableId="bookmarkLi" isDropDisabled>
-              {(provided) => (
-                <MovieListSubContainer ref={provided.innerRef}>
-                  {movieList?.Search?.map((movie, i) => (
-                    <MovieItem key={`${i}${movie.imdbID}`} item={movie} />
-                  ))}
-                  <div ref={setTarget}>{!isLoading && <Loading />}</div>
-                  {provided.placeholder}
-                </MovieListSubContainer>
-              )}
-            </Droppable>
-          </ul>
+          <MovieList movieList={movieList} setTarget={setTarget} isLoading={isLoading} />
         ) : (
           <NotFound error={movieList.Error} />
         )}
@@ -103,18 +85,4 @@ const Container = styled.main`
   ::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const MovieListSubContainer = styled.div`
-  ${({ theme }) => theme.flexbox("column", "flex-start", "center")}
-`;
-
-const MovieTotal = styled.p`
-  padding: 0.8rem 0.5rem;
-  font-size: 1.4rem;
-`;
-
-const TotalContainer = styled.div`
-  ${({ theme }) => theme.flexbox("row", "flex-start", "center")}
-  margin-left:1rem;
 `;
