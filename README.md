@@ -3,6 +3,7 @@
 영화API를 이용해 영화를 검색하고, 즐겨찾기 할 수 있는 웹 어플리케이션입니다.
 
 > [🚀 배포링크](https://main--inquisitive-shortbread-d8c91a.netlify.app/)
+> 개발 기간 5/9 - 5/17
 
 # 사용기술, 라이브러리
 
